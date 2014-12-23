@@ -1,0 +1,86 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <link rel="stylesheet" href="style.css" />
+<title>Display from file</title>
+</head>
+<body>
+	<!--  Parsing -->
+
+	<div class="searchtitle">
+	<h1>Seek and you will find!!</h1>
+	</div>
+	
+	<div class="searchbox">
+		<p>
+			<input type="text" id="query" size="50" />
+		</p>
+
+		<input id="vbutton" type="button" value="Search" />
+		<input id="luckyButton" type="button" value="I am feeling Lucky"/>
+	</div>
+	<div class = "tableProp">
+		<table id="table" class="hidden">	
+		<tr>
+		</tr>
+		</table>
+	</div>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript">
+
+$(document).ready(function() {
+    $("#vbutton").click(function() {
+       $.ajax({
+			type: 'GET',
+            url: 'http://54.84.56.247:8080/RUService/search', 
+			data:"query="+$("#query").val(),
+            dataType: 'jsonp',			
+            success:function(data) {
+			$("#table").empty();
+				if(data){
+                var len = data.responses.length;
+                var txt = "";
+                if(len > 0){
+                    for(var i=0;i<len;i++){
+                        if(data.responses[i].url && data.responses[i].snippet){
+                            txt += "<tr><td>"+"<a href="+data.responses[i].url+" target=_blank>"+data.responses[i].url+"</a>"+"</br>"+data.responses[i].snippet+"</br></br></td></tr>";
+                        }
+                    }
+                    if(txt != ""){
+                        $("#table").append(txt).removeClass("hidden");
+                    }
+                }
+            }
+            },
+			error:function(msg) {
+               document.write(msg);
+            }
+        })
+    });
+
+    $("#luckyButton").click(function() {
+        $.ajax({
+ 			type: 'GET',
+             url: 'http://54.84.56.247:8080/RUService/search',
+ 			data:"query="+$("#query").val(),
+             dataType: 'jsonp',			
+             success:function(data) {
+ 			$("#table").empty();
+ 				if(data){
+                 var len = data.responses.length;
+                 var txt = "";
+					window.location=data.responses[0].url;
+             }
+             },
+ 			error:function() {
+                document.write('Server shutdown..Try Later');
+             }
+         })
+     });
+    
+});
+</script>
+
+</body>
+</html>

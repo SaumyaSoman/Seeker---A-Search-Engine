@@ -1,0 +1,29 @@
+@charset "UTF-8";
+/* CSS Document */
+body {
+margin: 0;
+font-size: 14px;
+color: #1A1A1A;
+line-height: 30px;
+font-family: "Arial", serif;
+}
+
+h1{
+	color:#663366;
+	font-size:30px;
+}
+.tableProp{
+	text-align:center;
+	width : 980px;
+	padding : 70px;
+}
+
+.searchtitle{
+	top : 500px;
+	text-align:center;
+	margin : 0 auto;
+}
+
+.searchbox{
+	text-align:center;
+}
